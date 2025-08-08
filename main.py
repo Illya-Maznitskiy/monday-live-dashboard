@@ -1,5 +1,6 @@
 import requests
 
+from data_saver import save_json
 from utils import API_URL, headers, board_ids
 
 
@@ -62,3 +63,5 @@ if __name__ == "__main__":
         all_boards_data.append({"board_id": bid, "items": items})
 
     print_boards_data(all_boards_data)
+
+    save_json(all_boards_data, "boards_data.json")
