@@ -21,3 +21,15 @@ board_ids = [bid.strip() for bid in board_ids_str.split(",")]
 headers = {"Authorization": API_TOKEN, "Content-Type": "application/json"}
 
 API_URL = "https://api.monday.com/v2"
+
+
+def print_boards_data(boards):
+    """Print board IDs, tasks, and their column details."""
+
+    for board in boards:
+        print(f"Board ID: {board['board_id']}")
+        items = board.get("items", [])
+        for item in items:
+            print(f"  Task: {item['name']}")
+            for col in item["column_values"]:
+                print(f"    {col.get('id')}: {col.get('text')}")
