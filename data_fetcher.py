@@ -10,13 +10,16 @@ def get_board_data(board_id, columns=None, limit=500):
         query ($boardId: ID!, $columns: [ItemsPageByColumnValuesQuery!], $limit: Int!) {
           items_page_by_column_values(board_id: $boardId, columns: $columns, limit: $limit) {
             items {
-              id
-              name
-              column_values {
+              subitems {
                 id
-                text
-                value
+                name
+                column_values {
+                  id
+                  text
+                  value
+                }
               }
+
             }
           }
         }
