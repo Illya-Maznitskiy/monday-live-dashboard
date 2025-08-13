@@ -16,6 +16,10 @@ if not board_ids_str:
     raise ValueError("MONDAY_BOARD_IDS environment variable is not set")
 board_ids = [bid.strip() for bid in board_ids_str.split(",")]
 
+RESULT_BOARD_ID = os.getenv("MONDAY_RESULT_BOARD_ID")
+if not RESULT_BOARD_ID:
+    raise ValueError("RESULT_BOARD_ID environment variable is not set")
+
 
 # others
 headers = {"Authorization": API_TOKEN, "Content-Type": "application/json"}
