@@ -12,7 +12,6 @@ def main():
         items = get_board_data(bid)
         all_boards_data.append({"board_id": bid, "items": items})
 
-    print_boards_data(all_boards_data)
     save_json(all_boards_data, "boards_data.json")
 
     # Fetch all users data
