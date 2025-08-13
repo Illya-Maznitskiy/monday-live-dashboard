@@ -1,6 +1,6 @@
-from data_fetcher import get_board_data, get_all_users
-from data_saver import save_json
-from utils import board_ids, print_boards_data
+from src.data_fetcher import get_board_data, get_all_users
+from src.data_saver import save_json
+from src.utils import board_ids, print_boards_data
 
 
 def main():
