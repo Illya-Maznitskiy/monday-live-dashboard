@@ -1,6 +1,6 @@
 import requests
 
-from utils import API_URL, headers
+from src.utils import API_URL, headers
 
 
 def get_board_data(board_id, columns=None, limit=500):
