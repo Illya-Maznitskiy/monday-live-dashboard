@@ -62,6 +62,8 @@ def summarize_employee(boards_data):
 
     save_json(employee_summary, "employee_summary.json")
 
+    return employee_summary
+
 
 if __name__ == "__main__":
     # Load the JSON data
