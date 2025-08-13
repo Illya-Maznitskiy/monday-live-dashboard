@@ -3,7 +3,7 @@ from pathlib import Path
 
 import requests
 
-from src.utils import API_URL, headers
+from src.utils import API_URL, headers, RESULT_BOARD_ID
 
 
 def update_master_board(master_board_id, aggregated_data):
@@ -50,4 +50,4 @@ if __name__ == "__main__":
         with data_file.open("r", encoding="utf-8") as f:
             aggregated_data = json.load(f)
 
-        update_master_board("9797401777", aggregated_data)
+        update_master_board(RESULT_BOARD_ID, aggregated_data)
