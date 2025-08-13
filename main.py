@@ -1,6 +1,8 @@
 from src.data_fetcher import get_board_data, get_all_users
 from src.data_saver import save_json
-from src.utils import board_ids, print_boards_data
+from src.update_board import update_master_board
+from src.utils import board_ids, RESULT_BOARD_ID
+from src.workload_calculator import summarize_employee
 
 
 def main():
@@ -19,6 +21,13 @@ def main():
     print(f"Fetched {len(users)} users.")
     # Optionally save users data too
     save_json(users, "users_data.json")
+
+    # Summarize employee data
+    employee_summary = summarize_employee(all_boards_data)
+    save_json(employee_summary, "employee_summary.json")
+
+    # Update Monday board with the **employee summary**
+    update_master_board(RESULT_BOARD_ID, employee_summary)
 
 
 if __name__ == "__main__":
