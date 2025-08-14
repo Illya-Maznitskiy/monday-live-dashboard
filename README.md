@@ -8,7 +8,7 @@ Mini app for Monday.com to show team workload and calculate additional payments.
 ## Technologies Used
 - Python
 - Requests
-- dotenv
+- JSON
 
 
 ## Features
@@ -52,3 +52,6 @@ python -m main
 
 ### Logging
 ![Logging](screenshots/logging.png)
+
+### Monday Board
+![Monday Board](screenshots/monday_board.png)
