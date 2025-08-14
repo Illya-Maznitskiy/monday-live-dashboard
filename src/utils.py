@@ -26,6 +26,12 @@ headers = {"Authorization": API_TOKEN, "Content-Type": "application/json"}
 
 API_URL = "https://api.monday.com/v2"
 
+employee_rates = {
+    "Anastasia Domina": 500,
+    "Ira Skoryk": 1000,
+    "Kateryna Mokhova": 1500,
+}
+
 
 def print_boards_data(boards):
     """Print board IDs, tasks, and their column details."""
