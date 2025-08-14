@@ -32,6 +32,19 @@ employee_rates = {
     "Kateryna Mokhova": 1500,
 }
 
+ACTIVE_STATUSES = {
+    "IN PROGRESS",
+    "NEED REVIEW",
+    "LEAD FEEDBACK",
+    "TO PACK",
+    "SENT",
+    "CLIENT FEEDBACK",
+    "READY FOR CLIENT",
+    "PAUSED",
+}
+WORKLOAD_STATUSES = {"IN PROGRESS", "NEED REVIEW"}
+COMPLETED_STATUSES = {"DONE", "STOPPED"}
+
 
 def print_boards_data(boards):
     """Print board IDs, tasks, and their column details."""
