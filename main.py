@@ -4,7 +4,10 @@ from src.data_fetcher import get_board_data, get_all_users
 from src.data_saver import save_json
 from src.update_board import update_master_board
 from src.utils import board_ids, RESULT_BOARD_ID
-from src.workload_calculator import summarize_employee
+from src.workload_calculator import (
+    summarize_employee,
+    calculate_additional_payments,
+)
 
 
 def update_dashboard():
@@ -25,8 +28,12 @@ def update_dashboard():
     employee_summary = summarize_employee(all_boards_data)
     save_json(employee_summary, "employee_summary.json")
 
+    # Employee payments
+    employee_payments_summary = calculate_additional_payments()
+    print(f"Fetched {len(employee_payments_summary)} payments.")
+
     # Update Monday board
-    update_master_board(RESULT_BOARD_ID, employee_summary)
+    update_master_board(RESULT_BOARD_ID, employee_payments_summary)
     print("Dashboard updated!")
 
 
