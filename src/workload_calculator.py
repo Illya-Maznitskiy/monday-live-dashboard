@@ -3,25 +3,18 @@ from collections import defaultdict
 from pathlib import Path
 
 from src.data_saver import save_json
-from src.utils import employee_rates
-
-
-ACTIVE_STATUSES = {
-    "IN PROGRESS",
-    "NEED REVIEW",
-    "LEAD FEEDBACK",
-    "TO PACK",
-    "SENT",
-    "CLIENT FEEDBACK",
-    "READY FOR CLIENT",
-    "PAUSED",
-}
-WORKLOAD_STATUSES = {"IN PROGRESS", "NEED REVIEW"}
-COMPLETED_STATUSES = {"DONE", "STOPPED"}
+from src.utils import (
+    employee_rates,
+    ACTIVE_STATUSES,
+    WORKLOAD_STATUSES,
+    COMPLETED_STATUSES,
+)
 
 
 def summarize_employee(boards_data):
     """Summarize tasks per employee from boards data."""
+
+    # Automatically creates a new employee dict with zero counts if missing
     employee_summary = defaultdict(
         lambda: {"active": 0, "workload": 0, "completed": 0}
     )
@@ -58,7 +51,8 @@ def summarize_employee(boards_data):
     print("-" * 50)
     for emp, stats in employee_summary.items():
         print(
-            f"{emp:20} {stats['active']:6} {stats['workload']:8} {stats['completed']:9}"
+            f"{emp:20} {stats['active']:6} {stats['workload']:8} "
+            f"{stats['completed']:9}"
         )
 
     save_json(employee_summary, "employee_summary.json")
@@ -68,6 +62,7 @@ def summarize_employee(boards_data):
 
 def calculate_additional_payments():
     """Calculate Additional Payments, and save to JSON."""
+
     # Define path to project root
     path = Path(__file__).parent.parent
 
@@ -76,16 +71,16 @@ def calculate_additional_payments():
         with (path / "storage" / "employee_summary.json").open(
             "r", encoding="utf-8"
         ) as f:
-            employee_summaryjson = json.load(f)
+            employee_summary_json = json.load(f)
     except FileNotFoundError:
         print("employee_summary.json not found!")
         return
 
-    print(f"Employee Summary JSON: {employee_summaryjson}")
+    print(f"Employee Summary JSON: {employee_summary_json}")
 
     # Calculate Additional Payments
     employee_payments = {}
-    for name, summary in employee_summaryjson.items():
+    for name, summary in employee_summary_json.items():
         hours_worked = summary.get("active", 0) + summary.get("workload", 0)
         print(f"Employee {name} has {hours_worked} hours")
         rate = employee_rates.get(name, 0)  # fallback to 0 if missing
