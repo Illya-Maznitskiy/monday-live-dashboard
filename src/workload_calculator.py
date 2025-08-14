@@ -105,6 +105,8 @@ def calculate_additional_payments():
     for name, data in employee_payments.items():
         print(f"{name}: {data['additional_payment']}")
 
+    return employee_payments
+
 
 if __name__ == "__main__":
     # 1. Summarize employees first (build employee_summary.json)
