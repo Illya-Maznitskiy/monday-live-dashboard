@@ -3,8 +3,9 @@ from collections import defaultdict
 from pathlib import Path
 
 from src.data_saver import save_json
+from src.utils import employee_rates
 
-# Define which statuses are "active", "workload", and "completed"
+
 ACTIVE_STATUSES = {
     "IN PROGRESS",
     "NEED REVIEW",
@@ -65,16 +66,57 @@ def summarize_employee(boards_data):
     return employee_summary
 
 
-if __name__ == "__main__":
-    # Load the JSON data
-    # Get the project root (assuming this script is in src/)
-    PROJECT_ROOT = Path(__file__).parent.parent  # parent of src/
+def calculate_additional_payments():
+    """Calculate Additional Payments, and save to JSON."""
+    # Define path to project root
+    path = Path(__file__).parent.parent
 
-    # Build path to the JSON file in the root
+    # Load the employee summary JSON first
+    try:
+        with (path / "storage" / "employee_summary.json").open(
+            "r", encoding="utf-8"
+        ) as f:
+            employee_summaryjson = json.load(f)
+    except FileNotFoundError:
+        print("employee_summary.json not found!")
+        return
+
+    print(f"Employee Summary JSON: {employee_summaryjson}")
+
+    # Calculate Additional Payments
+    employee_payments = {}
+    for name, summary in employee_summaryjson.items():
+        hours_worked = summary.get("active", 0) + summary.get("workload", 0)
+        print(f"Employee {name} has {hours_worked} hours")
+        rate = employee_rates.get(name, 0)  # fallback to 0 if missing
+        print(f"Employee {name} has {rate:.2f} %")
+        additional_payment = hours_worked * rate
+        print(f"Employee {name} has {additional_payment:.2f} %")
+        employee_payments[name] = {
+            **summary,
+            "additional_payment": additional_payment,
+        }
+
+    # Save results to JSON
+    save_json(employee_payments, "employee_summary_with_payments.json")
+
+    # Optional: print results
+    print("Employee Additional Payments:")
+    for name, data in employee_payments.items():
+        print(f"{name}: {data['additional_payment']}")
+
+
+if __name__ == "__main__":
+    # 1. Summarize employees first (build employee_summary.json)
+    PROJECT_ROOT = Path(__file__).parent.parent
     data_file = PROJECT_ROOT / "storage" / "boards_data.json"
+
     if not data_file.exists():
         print(f"Error: {data_file} not found!")
     else:
         with data_file.open("r", encoding="utf-8") as f:
             boards_data = json.load(f)
         summarize_employee(boards_data)
+
+    # 2. Then calculate additional payments
+    calculate_additional_payments()
