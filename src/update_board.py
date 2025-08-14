@@ -21,6 +21,7 @@ def update_master_board(master_board_id, aggregated_data):
             "numeric_mktskysa": stats["active"],
             "numeric_mkts539e": stats["workload"],
             "numeric_mktsp120": stats["completed"],
+            "numeric_mkttp4j4": stats["additional_payment"],
         }
         print(f"Sending request with column values: {column_values}")
 
