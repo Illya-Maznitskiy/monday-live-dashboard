@@ -7,9 +7,13 @@ from src.utils import API_URL, headers, RESULT_BOARD_ID
 
 
 def update_master_board(master_board_id, aggregated_data):
+    """Update Monday board with aggregated employee statistics."""
+
     query = """
     mutation($boardId: ID!, $itemName: String!, $columnValues: JSON!) {
-        create_item(board_id: $boardId, item_name: $itemName, column_values: $columnValues) {
+        create_item(
+        board_id: $boardId, item_name: $itemName, column_values: $columnValues
+        ) {
             id
         }
     }
@@ -37,7 +41,8 @@ def update_master_board(master_board_id, aggregated_data):
             headers=headers,
         )
         print(
-            f"Response status: {response.status_code}, response: {response.text}"
+            f"Response status: "
+            f"{response.status_code}, response: {response.text}"
         )
 
 
