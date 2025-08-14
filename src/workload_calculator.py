@@ -19,10 +19,12 @@ def summarize_employee(boards_data):
         lambda: {"active": 0, "workload": 0, "completed": 0}
     )
 
+    # Loop through all boards
     for board in boards_data:
         for item in board.get("items", []):
             for sub in item.get("subitems", []):
                 for col in sub.get("column_values", []):
+                    # Check if this column represents a person assignment
                     if col["id"] == "person" and col["text"]:
                         person_name = col["text"]
 
@@ -38,7 +40,7 @@ def summarize_employee(boards_data):
                         if status_col:
                             status_text = status_col["text"]
 
-                            # Update counts
+                            # Increment counts based on the status
                             if status_text in ACTIVE_STATUSES:
                                 employee_summary[person_name]["active"] += 1
                             if status_text in WORKLOAD_STATUSES:
