@@ -12,6 +12,7 @@ from src.workload_calculator import (
 
 def update_dashboard():
     """Fetch data, summarize, save, and update Monday board."""
+
     # Fetch all boards data
     all_boards_data = []
     for bid in board_ids:
@@ -39,6 +40,7 @@ def update_dashboard():
 
 def main():
     """Run the update every 5 minutes."""
+
     while True:
         try:
             update_dashboard()
